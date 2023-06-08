@@ -1,0 +1,13 @@
+
+.rel_card{
+    display: flex;
+}
+
+.rel_img img{
+    width: 200px;
+}
+
+.rel_card .info{
+    display: flex;
+    flex-direction: column;
+}

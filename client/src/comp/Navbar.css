@@ -1,0 +1,12 @@
+
+.navbar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+}
+
+.navlogo{
+    height: 40px;
+}

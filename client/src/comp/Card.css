@@ -1,0 +1,53 @@
+
+
+.card{
+    width: 30%;
+    background-color: rgb(192, 226, 226);
+    height: 360px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 10px 10px;
+}
+
+
+.card .image{
+    width: 100%;
+    height: 245px;
+    display: flex;
+    align-items: start;
+    overflow: hidden;
+}
+
+
+.card img{
+    width: 100%;
+}
+
+
+.info{
+    display: flex;
+    position: relative;
+    top: 0;
+ 
+}
+
+.info .avatar{
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar img{
+    width: 100%;
+    height: auto;
+}
+
+.info .other_info{
+  margin-left: 10px;
+}
+
+.info .other_info h3{
+   margin-top: 10px;
+
+}
