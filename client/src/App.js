@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Videopage from './pages/Videopage';
+import Login from './pages/Login';
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path='/'>
             <Route index element={<Homepage/>} />
+            <Route path="login" element={<Login/>} />
             <Route path="video">
               <Route path=":id" element={<Videopage/>} />
             </Route>
