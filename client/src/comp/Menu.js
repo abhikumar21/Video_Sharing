@@ -15,6 +15,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ReportIcon from '@mui/icons-material/Report';
 import HelpIcon from '@mui/icons-material/Help';
 
+import { Link } from 'react-router-dom';
+
+
+
 const Menu = () => {
 
   const [theme, setTheme] = useState("light-theme");
@@ -36,13 +40,18 @@ const Menu = () => {
   return (
     <div className='menu'>
       <a href="#"><HomeIcon/> Menu</a>
-      <a href="#"><ExploreIcon/> Explore</a>
-      <a href="#"><SubscriptionsIcon/> Subscriptions</a>
+      <Link to="trends"><a href="#"><ExploreIcon/> Explore</a></Link>
+      <Link to="subscriptions"><a href="#"><SubscriptionsIcon/> Subscriptions</a></Link>
+   
       <hr/>
       <a href="#"><VideoLibraryIcon/> Library</a>
       <a href="#"><HistoryIcon/> History</a>
       <hr/>
-      <div className='sugg'>Sign in to like videos, comment and Subscribe</div>
+      <div className='sugg'>Sign in to like videos, comment and Subscribe
+       <Link to="login">
+        <button>Sign In</button>
+       </Link>
+      </div>
       <hr/>
       <a href="#"><LibraryMusicIcon/> Music</a>
       <a href="#"><SportsVolleyballIcon/> Sports</a>

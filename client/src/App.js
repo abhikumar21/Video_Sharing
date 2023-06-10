@@ -23,7 +23,10 @@ function App() {
         <Menu/>
         <Routes>
           <Route path='/'>
-            <Route index element={<Homepage/>} />
+            <Route index element={<Homepage type="random" />} />
+            <Route path="trends" index element={<Homepage type="trend"/>} />
+            <Route path="subscriptions" index element={<Homepage type="sub" />} />
+
             <Route path="login" element={<Login/>} />
             <Route path="video">
               <Route path=":id" element={<Videopage/>} />
