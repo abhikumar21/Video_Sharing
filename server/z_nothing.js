@@ -14,4 +14,19 @@
 // app.use(bodyParser.json({limit: "30mb", extended: true}));
 // app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 
-//1:20...
+//how to connect frontend and backend
+//1.fetch api
+// const res = await fetch("/register", {
+//method:"POST",
+//header:{
+//content-type:"application/json"
+//},
+//body: JSON.stringify({
+//name, email, ... 
+//})
+//})
+//2.axios
+
+//proxy in client-> package.json
+//install axios in client
+//1:25...  1:40

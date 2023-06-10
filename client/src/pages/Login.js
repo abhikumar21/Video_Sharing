@@ -4,7 +4,7 @@ import Animage from '../images/p7.jpg'
 
 const Login = () => {
 
-    const [user, setUser] = useState(false)
+    const [user, setUser] = useState(true)
 
     const changeUser = (e) => {
         if(user) setUser(false)
