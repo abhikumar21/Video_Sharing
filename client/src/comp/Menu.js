@@ -16,6 +16,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import HelpIcon from '@mui/icons-material/Help';
 
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
@@ -36,6 +37,7 @@ const Menu = () => {
   }, [theme]);
 
   
+  const {currentUser} = useSelector(state => state.user)
 
   return (
     <div className='menu'>
@@ -47,11 +49,14 @@ const Menu = () => {
       <a href="#"><VideoLibraryIcon/> Library</a>
       <a href="#"><HistoryIcon/> History</a>
       <hr/>
+      { !currentUser &&  
+      
       <div className='sugg'>Sign in to like videos, comment and Subscribe
        <Link to="login">
         <button>Sign In</button>
        </Link>
       </div>
+      }
       <hr/>
       <a href="#"><LibraryMusicIcon/> Music</a>
       <a href="#"><SportsVolleyballIcon/> Sports</a>

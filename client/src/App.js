@@ -15,6 +15,8 @@ import Login from './pages/Login';
 
 
 function App() {
+
+
   return (
     <BrowserRouter>
     <div className="App">
@@ -23,6 +25,7 @@ function App() {
         <Menu/>
         <Routes>
           <Route path='/'>
+            {}
             <Route index element={<Homepage type="random" />} />
             <Route path="trends" index element={<Homepage type="trend"/>} />
             <Route path="subscriptions" index element={<Homepage type="sub" />} />

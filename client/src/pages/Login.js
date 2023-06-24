@@ -1,10 +1,21 @@
 import React, {useState} from 'react'
 import './Login.css'
 import Animage from '../images/p7.jpg'
+import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
+import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import {auth, provider} from '../firebase.js'
+import { signInWithPopup } from 'firebase/auth'
+
+
+
+
 
 const Login = () => {
+  const dispatch = useDispatch();
+
    const [data, setData] = useState({
-       username:"",
+       name:"",
        email:"",
        password:""
 
@@ -13,48 +24,101 @@ const Login = () => {
     setData({...data, [e.target.name]: e.target.value})
    }
 
-   const handleSubmit = (e) => {
+   const handleLogin = async(e) => {
     e.preventDefault();
-    
-    
+    dispatch(loginStart())
+    try {
+      const {email, password} = data;
+      const res = await axios.post("/auth/login", { email, password })
+      dispatch(loginSuccess(res.data))
+
+    } catch (error) {
+      dispatch(loginFailure());
+    }
+    setData({
+      name:"",
+       email:"",
+       password:""
+    })
+   }
+
+   const handleSignin = async(e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/auth/signup", data)
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setData({
+      name:"",
+       email:"",
+       password:""
+    })
    }
 
 
-    const [user, setUser] = useState(false)
+    const [user, setUser] = useState(true)
     const changeUser = (e) => {
         if(user) setUser(false)
         else setUser(true)
     }
 
+
+  const signInwithgoogle = async(e) => {
+  //   dispatch(loginStart())
+  //   await signInWithPopup(auth, provider)
+  //   .then((result) => {
+  //     axios.post("/auth/google", {
+  //       name:result.user.displayName,
+  //       email:result.user.email,
+  //       img:result.user.photoURL,
+  //     }).then((res)=> {
+  //       dispatch(loginSuccess(res.data))
+  //     })
+  //     console.log(result);
+  //   }).catch((error=>{
+  //     dispatch(loginFailure());
+  //   }))
+  }  
+
+
   return (
     <div className='login'>
-       <div className="img"> <img className='bgimg' src={Animage}></img></div>
 
        {
-        user ? (
+        user ? (<>
+       <div className="img"> <img className='bgimg' src={Animage}></img></div>
+
             <div className="box">
             <h2 className='log_head'>Login Here</h2>
             <form className="inputs">
-                <input type="text" placeholder='Username' name="username" autoComplete='off' />
-                <input type="password" placeholder='Password' name="password" autoComplete='off'/>
+                <input type="text" placeholder='emaill' name="email" autoComplete='off' value={data.email} onChange={handleChange} />
+                <input type="password" placeholder='Password' name="password" autoComplete='off' value={data.password} onChange={handleChange} />
     
-                <button className='login_btn'>Login</button>
+                <button className='login_btn'onClick={handleLogin} >Login</button>
             </form>
     
             <h4>Don't have an account <a onClick={()=>changeUser()}>Sign Up</a></h4>
+            <button onClick={signInwithgoogle}>Sign In with GOOGLE</button>
           </div>
+          </>
         ) : (
+          <>
+       <div className="img"> <img className='bgimg' src={Animage}></img></div>
+          
             <div className="box">
             <h2 className='reg_head'>Register</h2>
             <form className="inputs">
-                <input type="text" placeholder='Username' name="username" value={data.username} onChange={handleChange} /> 
+                <input type="text" placeholder='Username' name="name" value={data.name} onChange={handleChange} /> 
                 <input type="text" placeholder='E-mail' name="email" value={data.email} onChange={handleChange} />
                 <input type="text" placeholder='Password' name="password" value={data.password} onChange={handleChange} />
                                                                                           {/* onChange={(e)=>handleChange(e)} */}
-                <button className='login_btn' onClick={(e)=>handleSubmit(e)}>Sign Up</button>
+                <button className='login_btn' onClick={(e)=>handleSignin(e)}>Sign Up</button>
             </form>
             <h4>Already have an account <a onClick={()=>changeUser()}>Login</a></h4>
           </div>
+          </>
         )
        }
 

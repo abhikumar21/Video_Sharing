@@ -3,6 +3,7 @@ import './Card.css'
 import Thumbnail from '../images/thumb.png'
 import ChannelIcon from '../images/channel_icon.jpeg'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const Card = ({type, video}) => {
@@ -17,7 +18,8 @@ const Card = ({type, video}) => {
   },[video.userId])
 
   return (
-    <div className='card'>
+      
+    <Link to={`/video/${video._id}`} className='card'>
         <div className='image'>
           <img src={video.imgUrl} />
         </div>
@@ -26,11 +28,11 @@ const Card = ({type, video}) => {
             <div className='other_info'>
                 <h3>{video.title}</h3>
                 <h5>{channel.name}</h5>
-                <p>{video.views} views | 2 days ago</p>
+                <p>{video.views} views | 1 days ago</p>
             </div>
         </div>
       
-    </div>
+    </Link>
   )
 }
 

@@ -1,14 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Thumbnail from '../images/thumb.png'
 import './Play_vid.css'
 import ChannelIcon from '../images/ch_icon.png'
 import { useCollapse } from 'react-collapsed'
 import Comments from './Comments.js'
+import { useLocation } from 'react-router-dom'
+import axios from 'axios'
+//useState => change in state is reflected after refreshing
+//videoSlice => change is reflected instantly
 
 
 const Play_vid = () => {
 
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
+  const path = useLocation().pathname.split("/")[2];
+  // console.log(path) 
+  //we use the path to fetch the data from database
+
+  const [video, setVideo] = useState({})
+  const [channel, setChannel] = useState({});
+
+  useEffect(()=> {
+    const fetchData = async() => {
+      try {
+        const videoRes = await axios.get(`/videos/find/${path}`)
+        const channelRes = await axios.get(`/users/find/${videoRes.userId}`)
+
+        setVideo(videoRes.data)
+        setChannel(channelRes.data)
+
+      } catch (error) {
+        
+      }
+    }
+    fetchData();
+  }, [path])
+
 
   return (
     <div className='playing_vid'>
