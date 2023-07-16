@@ -22,3 +22,22 @@
       width: 100%;
       height: auto;
   }
+
+.modal_box{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 60vh;
+    width: 50vw;
+    background-color: rgb(248, 251, 251);
+    padding: 15px;
+}  
+
+.videoform{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

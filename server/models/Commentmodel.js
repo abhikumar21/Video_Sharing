@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
 
-const CommentSchema = ({
+const CommentSchema = new mongoose.Schema({
     userId:{
         type: String,
-        required: true,
     },
     videoId:{
         type: String,
@@ -15,6 +14,6 @@ const CommentSchema = ({
         required: true,
     },
 
-}, {timestamps: true})
+}, {timestamps: true} );
 
 export default mongoose.model("Comment", CommentSchema)

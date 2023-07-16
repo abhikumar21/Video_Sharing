@@ -84,19 +84,15 @@ export const unsubscribe = (req, res, next) => {
 }
 
 export const like = async(req, res, next) => {
-   const userId = req.params.id;
-   const videoId = req.body.id;
+   const id = req.user.id;
+   const videoId = req.user.videoId;
 
    try {
-       const I_like_video = await Videomodel.findById(userId);
-       const liked_video = await Videomodel.findById(videoId);
-
-       if(!I_like_video.likes.includes(videoId)) {
-        await I_like_video.findByIdAndUpdate({$push: {likes: videoId}})
-       }
-       else{
-         await I_like_video.findByIdAndUpdate({$pull: {likes: videoId}})
-       }
+     await Videomodel.findByIdAndUpdate(videoId, {
+        $addToSet: {likes:id},
+        $pull: {dislikes:id}
+     })
+     res.status(200).json("video liked")
 
    } catch (error) {
     next(error)

@@ -11,11 +11,11 @@ const VideoSchema = new mongoose.Schema({
     },
     imgUrl:{
         type: String, 
-        required: true,
+        // required: true,
     },
     videoUrl:{
         type: String,
-        required: true,
+        // required: true,
     },
     desc:{
         type: String,

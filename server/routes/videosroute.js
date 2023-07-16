@@ -5,10 +5,10 @@ import { verifyToken } from "../verifyToken.js";
 
 const router = express.Router();
 
-router.post("/", verifyToken, addVideo)
+router.post("/post", verifyToken, addVideo)
 router.put("/:id", verifyToken, updateVideo)
 router.delete("/", verifyToken, deleteVideo)
-router.get("/find/:id", verifyToken, getVideo)
+router.get("/find/:id", getVideo)
 router.put("/view/:id", verifyToken, viewVideo)
 router.get("/trend", trendingVideo)
 router.get("/random", randomVideo)

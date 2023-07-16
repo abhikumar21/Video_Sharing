@@ -6,56 +6,66 @@ import { useCollapse } from 'react-collapsed'
 import Comments from './Comments.js'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import {useSelector, useDispatch} from 'react-redux'
+import { fetchStart, fetchSuccess, fetchFailure } from '../redux/videoSlice'
+import Upload from './Upload.js'
 //useState => change in state is reflected after refreshing
 //videoSlice => change is reflected instantly
 
 
 const Play_vid = () => {
-
+  const {currentUser} = useSelector((state) => state.user)
+  const { currentVideo } = useSelector((state) => state.video)
+  console.log(currentVideo)
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   const path = useLocation().pathname.split("/")[2];
-  // console.log(path) 
-  //we use the path to fetch the data from database
+  // console.log(`/videos/find/${path}`) 
+  // we use the path to fetch the data from database
 
   const [video, setVideo] = useState({})
   const [channel, setChannel] = useState({});
+  const dispatch = useDispatch()
 
   useEffect(()=> {
     const fetchData = async() => {
+      dispatch(fetchStart())
+     
       try {
         const videoRes = await axios.get(`/videos/find/${path}`)
-        const channelRes = await axios.get(`/users/find/${videoRes.userId}`)
-
-        setVideo(videoRes.data)
+        const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`)  
         setChannel(channelRes.data)
+        setVideo(videoRes.data)
+        dispatch(fetchSuccess(videoRes.data))
 
       } catch (error) {
-        
+        dispatch(fetchFailure());
       }
     }
     fetchData();
-  }, [path])
+  }, [path, dispatch])
+
 
 
   return (
+    <>
     <div className='playing_vid'>
       <div className='video'><img src={Thumbnail}/></div>
 
       <div className='v1_info'>
-          <div className='v1_title'><h2>How to make 3D rotating Image Gallery | Animated rotating gallery| HTML and CSS only | Advanced CSS</h2></div>
+          <div className='v1_title'><h2>{currentVideo.title}</h2></div>
         <div className='v1_bel'>
           <div className='v1_vid_num'>
             <div className='v1_avatar'>
               <img src={ChannelIcon}/>
             </div>
             <div className='v1_ch'>
-               <h4 className='v1_chname'>WebDevExplorers</h4>
-               <p>157M Subscribers</p>
+               <h4 className='v1_chname'>{currentUser.name}</h4>
+               <p>{currentUser.subscribers} Subscribers</p>
             </div>
           </div>
         
          <div className='v12_buttons'>
-          <button className='like_dislike'>Like</button>
+          <button className='like_dislike'>{currentVideo.likes.length} Like</button>
           <button className='like_dislike'>Share</button>
           <button className='like_dislike'>Save</button>
           <button className='like_dislike'>...</button>
@@ -65,19 +75,8 @@ const Play_vid = () => {
       </div>
 
       <div className='description'>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima pariatur nobis magnam ipsum quam ducimus velit eius natus adipisci beatae illum sed minus provident exercitationem totam reiciendis ad explicabo cum, nulla dolor magni maxime omnis quia cumque. Atque sed ipsam libero quaerat porro consequatur debitis quam laudantium amet dolorum optio
-
-        {isExpanded ? '' : (
-          <button className='expand' {...getToggleProps()} >Show More</button>
-        )}
-
-        <div {...getCollapseProps()}>
-        temporibus sapiente maiores explicabo laboriosam voluptates, fugit iure veritatis natus? Possimus perspiciatis labore molestias aperiam, animi doloribus hic libero qui dolores neque nam sint deleniti aspernatur error odit aliquid perferendis omnis vero architecto id pariatur? Vitae facere asperiores repellendus accusamus suscipit delectus voluptatibus quod dolorem eligendi assumenda ab eum reprehenderit aut odio consequatur alias nesciunt obcaecati vel distinctio dolorum, dolor voluptatum, cum modi? Enim unde modi quas totam. Dolor velit molestias perferendis cupiditate eum? Officiis culpa dolorum aperiam illum necessitatibus odit ratione iusto fuga recusandae. Magnam assumenda esse minus? Perferendis cumque sunt molestias at aspernatur itaque ea neque, modi iure!
-        </div>
-
-        { !isExpanded ? '' : (
-          <button className='expand collapse' {...getToggleProps()} >Show Less</button>
-        )}
+        <h5>{currentVideo.views} Views | {currentVideo.createdAt} </h5><br/>
+         {currentVideo.desc}
 
        </div>
 
@@ -99,11 +98,10 @@ const Play_vid = () => {
       <Comments/>
       <Comments/>
      </div>
-   
-
     </div>
-
     </div>
+    
+    </>
   )
 }
 

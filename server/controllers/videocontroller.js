@@ -8,7 +8,7 @@ export const addVideo = async(req, res, next) => {
      //req.user contains userId in middleware verifyToken.js
     const newVideo = await Videomodel({ userId: req.user.id, ...req.body });
     try {
-
+        
         const saveVideo = await newVideo.save();
         res.status(200).json(saveVideo)
         
@@ -46,8 +46,12 @@ export const getVideo = async(req, res, next) => {
     const videoId = req.params.id;
     try {
         const myvideo = await Videomodel.findById(videoId)
-        if(!myvideo) return next(createError(404, "Video not found")) 
-        else return res.status(200).json("find");
+        if(!myvideo) {
+            return next(createError(404, "Video not found")) 
+        } 
+        else{
+            return res.status(200).json(myvideo);
+        }
         
     } catch (error) {
         next(error)

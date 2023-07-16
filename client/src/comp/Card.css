@@ -51,3 +51,16 @@
    margin-top: 10px;
 
 }
+
+.three_dots{
+    position: absolute;
+    right: 0;
+}
+.three_dots:hover{
+    color: chartreuse;
+}
+
+.drop_down{
+    display: flex;
+    flex-direction: column;
+}
