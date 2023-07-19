@@ -10,12 +10,13 @@ import {
 import Homepage from './pages/Homepage';
 import Videopage from './pages/Videopage';
 import Login from './pages/Login';
+import { useSelector } from 'react-redux';
 
 
 
 
 function App() {
-
+  const {currentUser} = useSelector((state) => state.user)
 
   return (
     <BrowserRouter>
@@ -25,14 +26,14 @@ function App() {
         <Menu/>
         <Routes>
           <Route path='/'>
-            {}
+            
             <Route index element={<Homepage type="random" />} />
             <Route path="trends" index element={<Homepage type="trend"/>} />
             <Route path="subscriptions" index element={<Homepage type="sub" />} />
 
-            <Route path="login" element={<Login/>} />
+            <Route path={currentUser ? "" : "login"} element={currentUser? <Homepage type="trend"/> : <Login/> } />
             <Route path="video">
-              <Route path=":id" element={<Videopage/>} />
+              <Route path=":id" element={<Videopage type="random"/>} />
             </Route>
           </Route>
         </Routes>

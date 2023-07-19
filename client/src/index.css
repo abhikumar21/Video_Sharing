@@ -16,14 +16,20 @@ code {
   color: aliceblue;
   --text-clr: aliceblue;
   --bg-menu: rgb(55, 55, 55);
-  --bg-nav: #282828;
+  --bg-nav: #101010;
+  --bg-cardsPage: #535151;
+  --bg-card: #282828;
+  --cardText: #f9f9f9;
 }
 
 .light-theme{
   color: black;
   --text-clr: black;
-  --bg-menu: aliceblue;
-  --bg-nav: white;
+  --bg-menu: rgb(131, 216, 61);
+  --bg-nav: rgb(216, 182, 71);
+  --bg-cardsPage: #ffffff;
+  --bg-card: #ffdccd;
+  --cardText:#000000;
 }
 
 .menu{
@@ -39,4 +45,13 @@ code {
 
 .navbar{
   background-color: var(--bg-nav);
+}
+
+.cards_page{
+  background-color: var(--bg-cardsPage);
+}
+
+.card_text_color{
+  background-color: var(--bg-card);
+  color: var(--cardText);
 }

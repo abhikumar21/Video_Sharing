@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './Login.css'
 import Animage from '../images/p7.jpg'
-import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
+import { loginFailure, loginStart, loginSuccess, signupFailure, signupStart, signupSuccess } from '../redux/userSlice';
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import {auth, provider} from '../firebase.js'
@@ -42,13 +42,16 @@ const Login = () => {
     })
    }
 
-   const handleSignin = async(e) => {
+   const handleSignup = async(e) => {
     e.preventDefault();
+    dispatch(signupStart())
     try {
       const res = await axios.post("/auth/signup", data)
-      console.log(res.data);
+      console.log(res);
+      dispatch(signupSuccess(res.data))
     } catch (error) {
       console.log(error);
+      dispatch(signupFailure())
     }
     setData({
       name:"",
@@ -114,7 +117,7 @@ const Login = () => {
                 <input type="text" placeholder='E-mail' name="email" value={data.email} onChange={handleChange} />
                 <input type="text" placeholder='Password' name="password" value={data.password} onChange={handleChange} />
                                                                                           {/* onChange={(e)=>handleChange(e)} */}
-                <button className='login_btn' onClick={(e)=>handleSignin(e)}>Sign Up</button>
+                <button className='login_btn' onClick={handleSignup}>Sign Up</button>
             </form>
             <h4>Already have an account <a onClick={()=>changeUser()}>Login</a></h4>
           </div>

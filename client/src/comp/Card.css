@@ -1,8 +1,9 @@
 
 
 .card{
+    position: relative;
     width: 30%;
-    background-color: rgb(192, 226, 226);
+    /* background-color: rgb(65, 234, 234); */
     height: 360px;
     border-radius: 15px;
     overflow: hidden;
@@ -54,13 +55,40 @@
 
 .three_dots{
     position: absolute;
+    background: transparent;
+    border: none;
     right: 0;
+    padding: 10px;
 }
 .three_dots:hover{
-    color: chartreuse;
+    color: rgb(42, 43, 94);
 }
 
 .drop_down{
+    position: absolute;
+    top:30%;
     display: flex;
     flex-direction: column;
+    right: 0;
+    z-index: 10;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 4px;
 }
+
+.drop_down a{
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.drop_down a:hover{
+    background-color: rgb(227, 236, 236);
+}
+
+.link1{
+    text-decoration: none;
+}
+

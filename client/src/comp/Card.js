@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './Card.css'
-import Thumbnail from '../images/thumb.png'
+import Thumbnail from '../images/p7.jpg'
 import ChannelIcon from '../images/channel_icon.jpeg'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -30,31 +30,24 @@ const Card = ({type, video}) => {
   },[video.userId])
 
   return (
-    <Menu>
-      <div className='card'>
-      {/* <Link to={`/video/${video._id}`} className='card'> */}
+ 
+    <div className='card card_text_color'>
+      <Link to={`/video/${video._id}`}>
         <div className='image'>
           <img src={video.imgUrl} />
         </div>
+      </Link>
         <div className='info'>
             <div className='avatar'><img src={ChannelIcon}></img></div>
             <div className='other_info'>
-                <h3 className='mr-5 pt-5'>{video.title}</h3>
+            <Link to={`/video/${video._id}`} className='link1 card_text_color'><h3 className='mr-5 pt-5'>{video.title}</h3></Link>
                 <h5>{channel.name}</h5>
                 <p>{video.views} views | 1 days ago</p>
             </div>
-            {/* <a className="three_dots" onClick={handleDelete}><MoreVertIcon/></a> */}
 
-   
-      {/* <Menu.Button className="three_dots"><MoreVertIcon/></Menu.Button> */}
-  
-          
-
-        </div>
-      
-    {/* </Link> */}
-    </div>
-    <Menu.Items className="drop_down">
+    <Menu>
+      <Menu.Button className="three_dots"><MoreVertIcon/></Menu.Button>
+      <Menu.Items className="drop_down">
         <Menu.Item>
           {({ active }) => (
             <a className={`${active && 'bg-blue-500'} `}
@@ -75,6 +68,12 @@ const Card = ({type, video}) => {
         </Menu.Item>
       </Menu.Items>
     </Menu>
+
+        </div>
+    {/* </Link> */}
+  </div>
+
+
   )
 }
 

@@ -42,8 +42,8 @@ const Menu = () => {
   return (
     <div className='menu'>
       <a href="#"><HomeIcon/> Menu</a>
-      <Link to="trends"><a href="#"><ExploreIcon/> Explore</a></Link>
-      <Link to="subscriptions"><a href="#"><SubscriptionsIcon/> Subscriptions</a></Link>
+      <Link to="trends"><ExploreIcon/> Explore</Link>
+      <Link to="subscriptions"><SubscriptionsIcon/> Subscriptions</Link>
    
       <hr/>
       <a href="#"><VideoLibraryIcon/> Library</a>

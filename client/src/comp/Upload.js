@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import './Navbar.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import './Navbar.css'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from '../firebase';
 import axios from 'axios'
@@ -11,9 +11,10 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 
 
 
+
 const Upload = () => {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -68,10 +69,14 @@ const Upload = () => {
 
 const handleUpload = async(e) => {
   e.preventDefault();
-  console.log(inputs)
+  // console.log(inputs)
+
   try {
+
+    //this ensures file upload first
     //currectly works on login page
     const res = await axios.post("videos/post", {...inputs, tags})
+    setOpen(false);
     console.log("success", res)
   } catch (error) {
    console.log(error)
@@ -85,7 +90,7 @@ useEffect(()=> {img && uploadFile(img, "imgUrl")}, [img])
 
   return (
   <>
-    <Button onClick={handleOpen}><VideoCallIcon/></Button>
+    <Button className='upload_btn' onClick={handleOpen}><VideoCallIcon/></Button>
     <Modal
         open={open}
         onClose={handleClose}
@@ -103,15 +108,15 @@ useEffect(()=> {img && uploadFile(img, "imgUrl")}, [img])
       {vidPerc>0 ? ("Uploading"+vidPerc) :   (<input type="file" onChange={(e)=>setVideo(e.target.files[0]) } />) }
     
 
-      <input type="text" value={inputs.title} name="title" placeholder='Title' onChange={handleChange} />
-      <input type="text" value={inputs.desc} name="desc" placeholder='Description' onChange={handleChange} />
-      <input type="text" value={inputs.tags} name="tags" placeholder='tags: seperate by commas' onChange={handleTags} />
+      <input className='vform_input' type="text" value={inputs.title} name="title" placeholder='Title' onChange={handleChange} />
+      <textarea className='vform_input desc1' type="text" value={inputs.desc} name="desc" placeholder='Description' onChange={handleChange} />
+      <input className='vform_input' type="text" value={inputs.tags} name="tags" placeholder='tags: seperate by commas' onChange={handleTags} />
 
       <h4>Choose Thumbnail</h4>
       {imgPerc>0 ? ("Uploading"+imgPerc) : ( <input type="file" onChange={(e)=>setImg(e.target.files[0]) } />)}
      
 
-      <button onClick={handleUpload}>Submit</button>
+      <button onClick={handleUpload}className='submit_post'>Submit</button>
     </form>
   </Box>
   </Modal>
