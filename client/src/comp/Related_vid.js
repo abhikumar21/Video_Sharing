@@ -29,16 +29,6 @@ const Related_vid = ({type}) => {
         ))
         }
 
-       {/* <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/>
-       <Card_rel/> */}
-
       </div>
     </div>
   )

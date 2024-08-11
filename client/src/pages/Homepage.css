@@ -1,6 +1,7 @@
 
 .cards_page{
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-evenly;
 }

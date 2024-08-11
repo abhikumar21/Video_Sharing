@@ -4,7 +4,7 @@ import Commentmodel from "../models/Commentmodel.js"
 export const addComment = async(req, res, next) => {
     try {
         const newComment = new Commentmodel({...req.body, userId: req.user.id });
-        await newComment.save();;
+        await newComment.save();
         res.status(200).send(newComment)
     } catch (error) {
         next(error)

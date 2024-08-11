@@ -10,6 +10,7 @@ import { Menu } from '@headlessui/react'
 
 const Card = ({type, video}) => {
   const [channel, setChannel] = useState([]);
+  const truncatedTitle = video.title.slice(0, 70);
 
   const handleDelete = async(e) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const Card = ({type, video}) => {
         <div className='info'>
             <div className='avatar'><img src={ChannelIcon}></img></div>
             <div className='other_info'>
-            <Link to={`/video/${video._id}`} className='link1 card_text_color'><h3 className='mr-5 pt-5'>{video.title}</h3></Link>
+            <Link to={`/video/${video._id}`} className='link1 card_text_color'><h3 className='mr-5 pt-5'>{video.title.length>70 ? truncatedTitle+"..." : video.title}</h3></Link>
                 <h5>{channel.name}</h5>
                 <p>{video.views} views | 1 days ago</p>
             </div>

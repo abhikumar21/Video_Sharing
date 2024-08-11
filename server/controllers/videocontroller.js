@@ -130,11 +130,47 @@ export const getbytagVideo = async(req, res, next) => {
 export const searchVideo = async(req, res, next) => {
     const query = req.query.q;
     try {
-        const videos = await Videomodel.find({title: { $regex: query, $options: "i"},desc: { $regex: query, $options: "i"}, }).limit(40);
+        const videos = await Videomodel.find({ 
+            $or : 
+            [ 
+              {title: { $regex: query, $options: "i"}},
+              {desc: { $regex: query, $options: "i"}},
+              {tags: { $regex: query, $options: "i"}}
+            ]
+         }).sort({title: 1}).limit(40);
         res.status(200).json(videos)
     } catch (error) {
-        
+        next(error);
     }
 }
 
 
+export const likeVideo = async(req, res, next) => {
+    const id = req.user.id;
+    const videoId = req.params.videoId;
+
+    try {
+        await Videomodel.findByIdAndUpdate(videoId, {
+            $addToSet:{likes: id},
+            $pull:{dislikes: id}
+        })
+        res.status(200).json("The video has been liked")
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const dislikeVideo = async(req, res, next) => {
+    const id = req.user.id;
+    const videoId = req.params.videoId;
+
+    try {
+        await Videomodel.findByIdAndUpdate(videoId, {
+            $addToSet:{dislikes: id},
+            $pull:{likes: id}
+        })
+        res.status(200).json("The video has been disliked")
+    } catch (error) {
+        next(error)
+    }
+}

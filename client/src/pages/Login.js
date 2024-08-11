@@ -17,8 +17,8 @@ const Login = () => {
    const [data, setData] = useState({
        name:"",
        email:"",
-       password:""
-
+       password:"",
+      //  isAdmin:true
    })
    const handleChange = (e) => {
     setData({...data, [e.target.name]: e.target.value})
@@ -36,9 +36,10 @@ const Login = () => {
       dispatch(loginFailure());
     }
     setData({
-      name:"",
+       name:"",
        email:"",
-       password:""
+       password:"",
+      //  isAdmin: true
     })
    }
 
@@ -103,7 +104,7 @@ const Login = () => {
             </form>
     
             <h4>Don't have an account <a onClick={()=>changeUser()}>Sign Up</a></h4>
-            <button onClick={signInwithgoogle}>Sign In with GOOGLE</button>
+            <button className='submit_login' onClick={signInwithgoogle}>Sign In with GOOGLE</button>
           </div>
           </>
         ) : (

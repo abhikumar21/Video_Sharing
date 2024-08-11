@@ -11,7 +11,7 @@ import Homepage from './pages/Homepage';
 import Videopage from './pages/Videopage';
 import Login from './pages/Login';
 import { useSelector } from 'react-redux';
-
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -30,8 +30,7 @@ function App() {
             <Route index element={<Homepage type="random" />} />
             <Route path="trends" index element={<Homepage type="trend"/>} />
             <Route path="subscriptions" index element={<Homepage type="sub" />} />
-
-            <Route path={currentUser ? "" : "login"} element={currentUser? <Homepage type="trend"/> : <Login/> } />
+            <Route path="login" element={currentUser? <Navigate to="/trend" /> : <Login/> } />
             <Route path="video">
               <Route path=":id" element={<Videopage type="random"/>} />
             </Route>

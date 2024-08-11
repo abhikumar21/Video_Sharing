@@ -62,15 +62,12 @@ export const subscribe = async(req, res, next) => {
     else{
         try {
             const I_want_to_follow = await Usermodel.findById(userId) 
-            // const Follow_me = await Usermodel.findById(channelUserId)
+            const Follow_me = await Usermodel.findById(channelUserId)
 
             if(!I_want_to_follow.subscribedUsers.includes(channelUserId)) {
                 await I_want_to_follow.updateOne({$push : {subscribedUsers : channelUserId}} )
-                // await Follow_me.updateOne({$pull : {subscribers: userId}})
+                await Follow_me.updateOne({$inc: {subscribers: 1}})
                 res.status(200).json("Channel Subscribed")
-            }
-            else{
-                await I_want_to_follow.updateOne({$pull : {subscribedUsers: channelUserId}})
             }
         } catch (error) {
             next(error)

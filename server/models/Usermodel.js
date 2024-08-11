@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    isAdmin: {
+        type: Boolean,
+        default: true, // Set this to true for users who should have admin access.
+    },
 
 }, {timestamps: true} )
 

@@ -32,7 +32,7 @@ const Upload = () => {
     }
     
     const handleTags = (e) => {
-       setTags(e.target.value.split(","));
+       setTags(e.target.value.split(/,\s+/));
     }
 
     const uploadFile = (file, urlType) => {
@@ -64,18 +64,17 @@ const Upload = () => {
     }
   )
 });
-
 }
 
 const handleUpload = async(e) => {
   e.preventDefault();
-  // console.log(inputs)
+  console.log(inputs)
 
   try {
 
-    //this ensures file upload first
-    //currectly works on login page
-    const res = await axios.post("videos/post", {...inputs, tags})
+    const res = await axios.post("/videos/post", {...inputs, tags})
+    setInputs({title:"", desc:"", imgUrl:"", videoUrl:""});
+    setTags("")
     setOpen(false);
     console.log("success", res)
   } catch (error) {

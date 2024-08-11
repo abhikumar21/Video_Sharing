@@ -18,14 +18,14 @@
 }
 
 
-.avatar{
+.navbar .avatar{
     height: 50px;
     width: 50px;
     overflow: hidden;
     border-radius: 50%;
   }
   
-.avatar img{
+.navbar .avatar img{
     width: 100%;
     height: auto;
 }

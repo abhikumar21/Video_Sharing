@@ -43,7 +43,7 @@
     display: flex;
 }
 
-.v12_buttons .like_dislike{
+.v1_info .like_dislike{
     height: 35px;
     display: flex;
     width: auto;
@@ -54,8 +54,17 @@
     border: 2px solid black;
     border-radius: 20px;
     font-weight: 600;
-    
 }
+
+.sub_btn{
+    margin-left: 20px;
+    background-color: rgb(248, 120, 0) !important;
+    color: aliceblue !important;
+    border: none !important;
+
+ }
+
+
 
 .v1_avatar img{
     width: 100%;

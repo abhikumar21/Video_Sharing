@@ -12,7 +12,7 @@ export const signUp = async(req, res, next) => {
         const newUser = new Usermodel({ ...req.body });
         await newUser.save();
         const user = await Usermodel.findOne({email: req.body.email});
-
+        
         const token = Jwt.sign({id: user._id}, process.env.JWT_KEY, {expiresIn: 60*60*24*30})
             const {password, ...others} = user._doc;
 
@@ -23,7 +23,6 @@ export const signUp = async(req, res, next) => {
     } catch (error) {
         next(error);
     }
-
 }
 
 export const login = async(req, res, next) => {
@@ -49,13 +48,9 @@ export const login = async(req, res, next) => {
 
         }  
 
-
     } catch (error) {
         next(error);
     }
-  
-
-
 }
 
 

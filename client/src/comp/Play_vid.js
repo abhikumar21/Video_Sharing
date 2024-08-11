@@ -27,23 +27,38 @@ const Play_vid = () => {
   const [channel, setChannel] = useState({});
   const dispatch = useDispatch()
 
-  const {currentUser} = useSelector((state) => state.user)
-  const { currentVideo } = useSelector((state) => state.video)
+  const {currentUser, loading: userLoading} = useSelector((state) => state.user)
+  const { currentVideo, loading: videoLoading } = useSelector((state) => state.video)
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   const path = useLocation().pathname.split("/")[2];
   // console.log(`/videos/find/${path}`) 
   // we use the path to fetch the data from database
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
-  const handleLike = (e) => {
-    {liked ? setLiked(false) : setLiked(true)}
-    {disliked ? setDisliked(false) : setDisliked(false)}
 
+  // console.log(currentUser,"sub")
+  // console.log(currentVideo, "hello")
+
+  const handleLike = async(e) => {
+    try {
+      await axios.put(`/videos/like/${currentVideo._id}`)
+      {liked ? setLiked(false) : setLiked(true)}
+      {disliked ? setDisliked(false) : setDisliked(false)}
+    } catch (error) {
+      console.log(error)
+    }
   }
-  const handleDislike = (e) => {
-    {disliked ? setDisliked(false) : setDisliked(true)}
-    {liked ? setLiked(false) : setLiked(false)}
+
+  const handleDislike = async(e) => {
+    try {
+      await axios.put(`/videos/dislike/${currentVideo?._id}`)
+      {disliked ? setDisliked(false) : setDisliked(true)}
+      {liked ? setLiked(false) : setLiked(false)}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -64,6 +79,29 @@ const Play_vid = () => {
     }
   }
 
+  // const channelUserId = currentVideo.userId;
+  const handleSubscribe = async() => {    
+    try {
+      const res = await axios.put(`/users/sub/${currentUser._id}`, {channelUserId: currentVideo.userId})
+      setSubscribed(true)
+      // console.log("subscribed", res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+// console.log(currentUser._id, currentVideo.userId)
+  const handleUnsubscribe = async() => {    
+    try {
+      const res = await axios.put(`/users/unsub/${currentUser._id}`, {channelUserId: currentVideo.userId} )
+      setSubscribed(false)
+      console.log("subscribed")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+ 
+
   useEffect(()=> {
     const fetchData = async() => {
       dispatch(fetchStart())
@@ -76,6 +114,13 @@ const Play_vid = () => {
 
         dispatch(fetchSuccess(videoRes.data))
 
+        if(currentUser?.subscribedUsers.includes(currentVideo?.userId)) {
+          setSubscribed(true);
+        }
+        else{
+          setSubscribed(false);
+        }
+
       } catch (error) {
         dispatch(fetchFailure());
       }
@@ -83,8 +128,9 @@ const Play_vid = () => {
     fetchData();
   }, [path, dispatch])
 
-// console.log(currentVideo.videoUrl)
- if(!currentVideo) {
+
+
+ if(videoLoading) {
   return <div>Loading...</div>
  }
 
@@ -97,22 +143,26 @@ const Play_vid = () => {
         </div>
 
       <div className='v1_info'>
-          <div className='v1_title'><h2>{currentVideo.title}</h2></div>
+          <div className='v1_title'><h2>{currentVideo?.title}</h2></div>
         <div className='v1_bel'>
           <div className='v1_vid_num'>
             <div className='v1_avatar'>
               <img src={ChannelIcon}/>
             </div>
             <div className='v1_ch'>
-               <h4 className='v1_chname'>{currentUser.name}</h4>
-               <p>{currentUser.subscribers} Subscribers</p>
+               <h4 className='v1_chname'>{channel.name}</h4>
+               <p>{channel.subscribers} Subscribers</p>
             </div>
+            {subscribed? 
+             <button className='sub_btn like_dislike' onClick={handleUnsubscribe}>Unsubscribe</button> :
+             <button className='sub_btn like_dislike' onClick={handleSubscribe}>Subscribe</button>
+             }
           </div>
         
          <div className='v12_buttons'>
           <div className="ld_button">
-          <button className='like_dislike' onClick={handleLike}>{liked ? <ThumbUpAltIcon/> : <ThumbUpOffAltIcon/>} {currentVideo.likes?.length}</button>
-          <button className='like_dislike' onClick={handleDislike}>{disliked ? <ThumbDownAltIcon/> : <ThumbDownOffAltIcon/>} {currentVideo.dislikes?.length}</button>
+          <button className='like_dislike' onClick={handleLike}>{liked ? <ThumbUpAltIcon/> : <ThumbUpOffAltIcon/>} {currentVideo?.likes?.length}</button>
+          <button className='like_dislike' onClick={handleDislike}>{disliked ? <ThumbDownAltIcon/> : <ThumbDownOffAltIcon/>} {currentVideo?.dislikes?.length}</button>
           </div>
 
           <button className='like_dislike'><ShareIcon/> Share</button>
@@ -147,8 +197,8 @@ const Play_vid = () => {
       </div>
 
       <div className='description'>
-        <h5>{currentVideo.views} Views |  </h5><br/>
-         {currentVideo.desc}
+        <h5>{currentVideo?.views} Views |  </h5><br/>
+         {currentVideo?.desc}
 
        </div>
 
